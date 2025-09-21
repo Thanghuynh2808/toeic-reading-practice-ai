@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { PartSelector } from './components/PartSelector';
 import { PracticeArea } from './components/PracticeArea';
 import { Loader } from './components/Loader';
@@ -610,6 +611,8 @@ const App: React.FC = () => {
       <footer className="text-center py-4 text-slate-500 dark:text-slate-400 text-sm">
         <p>Generated with AI for educational purposes.</p>
       </footer>
+      
+      <SpeedInsights />
     </div>
   );
 };
