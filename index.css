@@ -1,21 +1,57 @@
 /* Import Google Fonts for better readability and Vietnamese support */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap');
 
-/* Modern Design System for TOEIC Reading Practice AI */
+/* Modern Design System for TOEIC Reading Practice AI with Dark/Light Mode Support */
 
-/* Custom CSS Variables */
+/* CSS Variables for Light and Dark Mode */
 :root {
+  /* Light mode colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-glass: rgba(255, 255, 255, 0.1);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-light: rgba(0, 0, 0, 0.1);
+  --border-color: #e2e8f0;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  
+  /* Gradients */
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  --card-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-  --card-shadow-hover: 0 12px 40px rgba(31, 38, 135, 0.25);
-  --glass-bg: rgba(255, 255, 255, 0.1);
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Card and UI */
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
   --glass-border: rgba(255, 255, 255, 0.2);
   --border-radius-lg: 16px;
   --border-radius-xl: 24px;
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: rgba(15, 23, 42, 0.95);
+    --bg-glass: rgba(15, 23, 42, 0.1);
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-color: #334155;
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    
+    --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --bg-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  }
 }
 
 /* Global Styles */
@@ -45,24 +81,26 @@
 
 body {
   font-family: 'Noto Sans', 'Inter', 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-gradient);
   background-attachment: fixed;
   min-height: 100vh;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.6;
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: 0.01em;
+  transition: var(--transition-smooth);
 }
 
-/* Smooth scrollbar */
+/* Smooth scrollbar - responsive to theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-glass);
   border-radius: 4px;
 }
 
@@ -75,30 +113,24 @@ body {
   background: var(--secondary-gradient);
 }
 
-/* Glass Morphism Effects */
+/* Unified Glass Morphism Effects */
 .glass-morphism {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: var(--bg-glass) !important;
   backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid var(--glass-border) !important;
   box-shadow: var(--card-shadow) !important;
+  transition: var(--transition-smooth) !important;
 }
 
-.glass-morphism-dark {
-  background: rgba(15, 23, 42, 0.8) !important;
-  backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: var(--card-shadow) !important;
-}
-
-/* Modern Card Styles */
+/* Modern Card Styles - Auto Dark/Light */
 .modern-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--bg-card);
   backdrop-filter: blur(20px);
   border-radius: var(--border-radius-xl);
   box-shadow: var(--card-shadow);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-light);
   transition: var(--transition-smooth);
-  color: #1e293b; /* Ensure dark text for light cards */
+  color: var(--text-primary);
 }
 
 .modern-card:hover {
@@ -106,20 +138,7 @@ body {
   box-shadow: var(--card-shadow-hover);
 }
 
-.modern-card-dark {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: var(--border-radius-xl);
-  box-shadow: var(--card-shadow);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: var(--transition-smooth);
-  color: #e2e8f0; /* Ensure light text for dark cards */
-}
-
-.modern-card-dark:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--card-shadow-hover);
-}
+/* Remove old dark card styles - now handled by CSS variables automatically */
 
 /* Gradient Buttons */
 .btn-gradient-primary {
@@ -176,6 +195,50 @@ body {
 .btn-gradient-success:hover {
   transform: translateY(-2px) !important;
   box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4) !important;
+}
+
+/* Dark/Light Mode Utility Classes */
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.bg-card {
+  background: var(--bg-card) !important;
+}
+
+.bg-secondary {
+  background: var(--bg-secondary) !important;
+}
+
+.border-theme {
+  border-color: var(--border-color) !important;
+}
+
+/* Enhanced Dark Mode Support for Tailwind Classes */
+@media (prefers-color-scheme: dark) {
+  .dark\:bg-slate-800 {
+    background-color: var(--bg-secondary) !important;
+  }
+  
+  .dark\:text-white {
+    color: var(--text-primary) !important;
+  }
+  
+  .dark\:text-slate-300 {
+    color: var(--text-secondary) !important;
+  }
+  
+  .dark\:border-slate-600 {
+    border-color: var(--border-color) !important;
+  }
 }
 
 /* Floating Animation */
