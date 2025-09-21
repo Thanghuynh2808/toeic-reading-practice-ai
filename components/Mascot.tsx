@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// Import assets correctly for Vite
+import mascotIdle from '../assets/mascot-idle.png';
+import mascotExplaining from '../assets/mascot-explaining.png';
+import mascotCorrect from '../assets/mascot-correct.png';
+import mascotThinking from '../assets/mascot-thinking.png';
+
 const mascotPoses = {
-    idle: '/assets/mascot-idle.png',
-    explaining: '/assets/mascot-explaining.png',
-    correct: '/assets/mascot-correct.png',
-    thinking: '/assets/mascot-thinking.png',
+    idle: mascotIdle,
+    explaining: mascotExplaining,
+    correct: mascotCorrect,
+    thinking: mascotThinking,
 };
 
 export type MascotPose = keyof typeof mascotPoses;

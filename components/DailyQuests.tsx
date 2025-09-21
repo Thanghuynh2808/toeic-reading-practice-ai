@@ -1,6 +1,13 @@
 import React, { useMemo } from 'react';
 import type { DailyQuestStatus } from '../types';
 
+// Import plant images correctly for Vite
+import plantStage0 from '../assets/plant-stage-0.png';
+import plantStage1 from '../assets/plant-stage-1.png';
+import plantStage2 from '../assets/plant-stage-2.png';
+import plantStage3 from '../assets/plant-stage-3.png';
+import plantStage4 from '../assets/plant-stage-4.png';
+
 interface DailyQuestsProps {
     quests: DailyQuestStatus;
     onClose: () => void;
@@ -65,11 +72,11 @@ const QUEST_CONFIG: {
 ];
 
 const getPlantImage = (progress: number): string => {
-    if (progress >= 100) return '/assets/plant-stage-4.png';
-    if (progress >= 80) return '/assets/plant-stage-3.png';
-    if (progress >= 50) return '/assets/plant-stage-2.png';
-    if (progress >= 20) return '/assets/plant-stage-1.png';
-    return '/assets/plant-stage-0.png';
+    if (progress >= 100) return plantStage4;
+    if (progress >= 80) return plantStage3;
+    if (progress >= 50) return plantStage2;
+    if (progress >= 20) return plantStage1;
+    return plantStage0;
 };
 
 const getPlantStage = (progress: number): { stage: string; message: string } => {
