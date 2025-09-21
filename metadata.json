@@ -1,0 +1,5 @@
+{
+  "name": "TOEIC Reading Practice AI",
+  "description": "An application to practice TOEIC reading parts 5, 6, and 7 with AI-generated questions based on common TOEIC topics and formats.",
+  "requestFramePermissions": []
+}

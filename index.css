@@ -1,0 +1,819 @@
+/* Import Google Fonts for better readability and Vietnamese support */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap');
+
+/* Modern Design System for TOEIC Reading Practice AI */
+
+/* Custom CSS Variables */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  --card-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  --card-shadow-hover: 0 12px 40px rgba(31, 38, 135, 0.25);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Enhanced font rendering */
+*, *::before, *::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Better text selection */
+::selection {
+  background-color: rgba(102, 126, 234, 0.3);
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: rgba(102, 126, 234, 0.3);
+  color: inherit;
+}
+
+body {
+  font-family: 'Noto Sans', 'Inter', 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-gradient);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-gradient);
+}
+
+/* Glass Morphism Effects */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+
+.glass-morphism-dark {
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+
+/* Modern Card Styles */
+.modern-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: var(--transition-smooth);
+  color: #1e293b; /* Ensure dark text for light cards */
+}
+
+.modern-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.modern-card-dark {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition-smooth);
+  color: #e2e8f0; /* Ensure light text for dark cards */
+}
+
+.modern-card-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Gradient Buttons */
+.btn-gradient-primary {
+  background: var(--primary-gradient) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.btn-gradient-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-gradient-primary:hover::before {
+  left: 100%;
+}
+
+.btn-gradient-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+}
+
+.btn-gradient-secondary {
+  background: var(--secondary-gradient) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-gradient-secondary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(240, 147, 251, 0.4) !important;
+}
+
+.btn-gradient-success {
+  background: var(--success-gradient) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-gradient-success:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4) !important;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.8), 0 0 30px rgba(102, 126, 234, 0.6); }
+  100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Question Card Styles */
+.question-card {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.question-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+}
+
+.question-card-dark {
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.question-card-dark::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
+}
+
+/* Option Button Styles */
+.option-btn {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 2px solid rgba(102, 126, 234, 0.3) !important;
+  border-radius: var(--border-radius-lg) !important;
+  transition: var(--transition-smooth) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  color: #1e293b !important; /* Darker text for better contrast */
+}
+
+.option-btn:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  border-color: rgba(102, 126, 234, 0.5) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15) !important;
+  color: #0f172a !important; /* Even darker on hover */
+}
+
+.option-btn-correct {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: rgb(34, 197, 94) !important;
+  color: rgb(15, 78, 46) !important; /* Darker green text */
+  font-weight: 700 !important;
+}
+
+.option-btn-incorrect {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgb(239, 68, 68) !important;
+  color: rgb(127, 29, 29) !important; /* Darker red text */
+  font-weight: 600 !important;
+}
+
+/* Vocabulary Card Styles */
+.vocab-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: var(--transition-smooth);
+  overflow: hidden;
+  position: relative;
+}
+
+.vocab-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.vocab-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--success-gradient);
+}
+
+/* Progress Bar Styles */
+.progress-modern {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.progress-fill {
+  background: var(--primary-gradient) !important;
+  border-radius: 50px !important;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: progress-shine 2s ease-in-out infinite;
+}
+
+@keyframes progress-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Header Styles */
+.header-modern {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Loading Spinner */
+.loader-modern {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(102, 126, 234, 0.2);
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin-smooth 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin-smooth {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mascot Container */
+.mascot-container {
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
+  transition: var(--transition-smooth);
+}
+
+.mascot-container:hover {
+  transform: scale(1.05);
+}
+
+/* Chat Bubble */
+.chat-bubble {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: var(--card-shadow) !important;
+  position: relative;
+  color: #1e293b !important; /* Dark text for light background */
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  font-family: 'Noto Sans', 'Inter', 'Segoe UI', sans-serif !important;
+}
+
+.chat-bubble p {
+  color: #1e293b !important;
+  margin: 0 !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  font-family: 'Noto Sans', 'Inter', 'Segoe UI', sans-serif !important;
+}
+
+.chat-bubble * {
+  color: #1e293b !important;
+}
+
+/* Force dark text in chat bubble even in dark mode */
+.dark .chat-bubble,
+.dark .chat-bubble p,
+.dark .chat-bubble * {
+  color: #1e293b !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+/* Debug: Force visible text */
+.chat-bubble, .chat-bubble p, .chat-bubble span {
+  color: #000000 !important;
+  text-shadow: 0 0 1px rgba(255,255,255,0.8) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 8px solid rgba(255, 255, 255, 0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-card, .modern-card-dark {
+    margin: 0 8px;
+    border-radius: var(--border-radius-lg);
+  }
+  
+  .question-card, .question-card-dark {
+    border-radius: 12px;
+  }
+  
+  .vocab-card {
+    border-radius: 12px;
+  }
+}
+
+/* Dark mode specific adjustments */
+.dark .modern-card {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .question-card {
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .vocab-card {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .option-btn {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border-color: rgba(102, 126, 234, 0.4) !important;
+  color: #e2e8f0 !important; /* Lighter text for dark mode */
+}
+
+.dark .option-btn:hover {
+  background: rgba(102, 126, 234, 0.2) !important;
+  color: #f1f5f9 !important; /* Even lighter on hover */
+}
+
+.dark .option-btn-correct {
+  color: rgb(34, 197, 94) !important; /* Bright green for dark mode */
+}
+
+.dark .option-btn-incorrect {
+  color: rgb(248, 113, 113) !important; /* Bright red for dark mode */
+}
+
+.dark .chat-bubble {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e2e8f0 !important; /* Light text for dark background */
+}
+
+.dark .chat-bubble::after {
+  border-top-color: rgba(15, 23, 42, 0.95);
+}
+
+/* Better text contrast for all text elements */
+.text-improved {
+  color: #1e293b !important;
+}
+
+.dark .text-improved {
+  color: #e2e8f0 !important;
+}
+
+/* High contrast text utilities */
+.text-high-contrast {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+
+.dark .text-high-contrast {
+  color: #f8fafc !important;
+  font-weight: 600 !important;
+}
+
+.text-medium-contrast {
+  color: #1e293b !important;
+  font-weight: 500 !important;
+}
+
+.dark .text-medium-contrast {
+  color: #e2e8f0 !important;
+  font-weight: 500 !important;
+}
+
+.text-description {
+  color: #374151 !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+.dark .text-description {
+  color: #d1d5db !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Card text improvements */
+.card-title {
+  color: #111827 !important;
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+  letter-spacing: -0.025em !important;
+}
+
+.dark .card-title {
+  color: #f9fafb !important;
+}
+
+.card-description {
+  color: #374151 !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  line-height: 1.625 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.dark .card-description {
+  color: #d1d5db !important;
+}
+
+.card-subtitle {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: -0.02em !important;
+}
+
+.dark .card-subtitle {
+  color: #e5e7eb !important;
+}
+
+/* Improved readability for small text */
+.text-readable-sm {
+  color: #475569 !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+.dark .text-readable-sm {
+  color: #cbd5e1 !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Better font weights for readability */
+.font-readable {
+  font-weight: 600 !important;
+}
+
+.font-readable-medium {
+  font-weight: 500 !important;
+}
+
+.font-readable-bold {
+  font-weight: 700 !important;
+}
+
+/* Enhanced text sizing for better readability */
+.text-enhanced-sm {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  font-weight: 500 !important;
+}
+
+.text-enhanced-base {
+  font-size: 1.1rem !important;
+  line-height: 1.7 !important;
+  font-weight: 500 !important;
+}
+
+.text-enhanced-lg {
+  font-size: 1.25rem !important;
+  line-height: 1.65 !important;
+  font-weight: 500 !important;
+}
+
+/* Improved Typography for Better Readability */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Segoe UI', 'SF Pro Display', sans-serif;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2.25rem; font-weight: 700; }
+h2 { font-size: 1.875rem; font-weight: 600; }
+h3 { font-size: 1.5rem; font-weight: 600; }
+h4 { font-size: 1.25rem; font-weight: 600; }
+h5 { font-size: 1.125rem; font-weight: 500; }
+h6 { font-size: 1rem; font-weight: 500; }
+
+/* Paragraph and text improvements */
+p {
+  line-height: 1.7;
+  margin-bottom: 1em;
+  font-size: 1rem;
+  color: inherit;
+}
+
+/* Better text readability for buttons */
+button, .btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+/* Enhanced text for cards and important content */
+.card-title {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.card-text, .card-body {
+  font-size: 0.95rem !important;
+  line-height: 1.65 !important;
+  font-weight: 400 !important;
+}
+
+/* Question text improvements */
+.question-text {
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Answer options improvements */
+.answer-option {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.005em !important;
+}
+
+/* Enhanced text contrast utilities */
+.text-high-contrast-light {
+  color: #0f172a !important; /* Very dark text for light backgrounds */
+  font-weight: 500 !important;
+}
+
+.text-high-contrast-dark {
+  color: #f8fafc !important; /* Very light text for dark backgrounds */
+  font-weight: 400 !important;
+}
+
+/* Ensure all white/light backgrounds have dark text */
+[style*="background: rgba(255, 255, 255"], 
+[style*="background-color: white"],
+[style*="background-color: #fff"],
+.bg-white, .bg-light {
+  color: #1e293b !important;
+}
+
+/* Ensure all dark backgrounds have light text */
+[style*="background: rgba(15, 23, 42"],
+[style*="background-color: #1e293b"],
+.bg-dark {
+  color: #e2e8f0 !important;
+}
+
+/* Daily Quests Animations */
+.quest-card-enter {
+  animation: questCardEnter 0.6s ease-out forwards;
+}
+
+@keyframes questCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.quest-completed-animation {
+  animation: questCompleted 0.8s ease-out;
+}
+
+@keyframes questCompleted {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+  100% { transform: scale(1); }
+}
+
+.plant-grow-animation {
+  animation: plantGrow 1s ease-out;
+}
+
+@keyframes plantGrow {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.progress-fill-animation {
+  animation: progressFill 1.5s ease-out;
+}
+
+@keyframes progressFill {
+  from { width: 0; }
+}
+
+/* Floating animation for quest icons */
+.quest-icon-float {
+  animation: questIconFloat 2s ease-in-out infinite;
+}
+
+@keyframes questIconFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Enhanced responsive grid utilities */
+@media (min-width: 1536px) {
+  .grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Prose styling for AI Analysis */
+.prose {
+  max-width: none;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: rgb(30 58 138); /* blue-900 */
+}
+
+.dark .prose strong {
+  color: rgb(147 197 253); /* blue-300 */
+}
+
+.prose em {
+  font-style: italic;
+  color: rgb(109 40 217); /* purple-700 */
+}
+
+.dark .prose em {
+  color: rgb(196 181 253); /* purple-300 */
+}
+
+.prose code {
+  background-color: rgb(226 232 240); /* slate-200 */
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+}
+
+.dark .prose code {
+  background-color: rgb(51 65 85); /* slate-700 */
+}
