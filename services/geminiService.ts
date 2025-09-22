@@ -111,7 +111,22 @@ export const getWordInfo = async (word: string): Promise<Omit<WordInfo, 'imageUr
         required: ["translation", "example", "phonetic", "visualDescription"],
     };
 
-    const prompt = `Provide information for the English word: "${word}". Give me its Vietnamese translation, a simple example sentence, its IPA phonetic transcription, and a short, vivid, concrete visual description suitable for an AI image generator. The description should focus on objects, scenes, or actions, and avoid abstract concepts or text.`;
+    const prompt = `Provide comprehensive information for the English word: "${word}".
+
+Return:
+1. Vietnamese translation (most common meaning)
+2. Simple example sentence using the word in context  
+3. IPA phonetic transcription with stress marks
+4. Visual description: Create a vivid, specific visual scene that represents this word's meaning. Focus on:
+   - Concrete objects, people, actions, or settings
+   - Visual elements that clearly represent the word's concept
+   - Specific details that make the scene searchable on image databases
+   - Avoid abstract concepts, emotions, or text-based descriptions
+   
+Examples of good visual descriptions:
+- "meeting" → "business people sitting around conference table in modern office"
+- "cooking" → "chef preparing food in professional kitchen with pots and ingredients"
+- "education" → "teacher explaining lesson to students in bright classroom"`;
 
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
@@ -132,21 +147,53 @@ export const getWordInfo = async (word: string): Promise<Omit<WordInfo, 'imageUr
     }
 };
 
-export const generateImageForWord = async (visualDescription: string): Promise<string> => {
+export const generateImageForWord = async (visualDescription: string, word?: string): Promise<string> => {
     try {
-        // Extract meaningful keywords from visual description for Unsplash search
-        const keywords = visualDescription
-            .toLowerCase()
-            .replace(/[^a-z\s]/g, '') // Remove special characters
-            .split(' ')
-            .filter(word => word.length > 2) // Keep words longer than 2 characters
-            .slice(0, 3) // Take first 3 keywords
-            .join(',');
+        // Use Gemini to create better search query from visual description
+        const queryPrompt = `From this visual description: "${visualDescription}"
         
-        const query = keywords || 'education'; // Fallback to 'education' if no keywords
+Extract the most important visual elements and create a short, specific search query (2-4 words) for finding relevant photos on Unsplash. 
+Focus on:
+- Concrete objects, actions, or scenes mentioned
+- Key visual elements that represent the word's meaning
+- Avoid abstract concepts or text
+- Use simple, common English words
+
+Examples:
+- "office meeting discussion" → "business meeting office"
+- "cooking food kitchen" → "cooking chef kitchen"
+- "car driving road" → "car highway driving"
+
+Return only the search query, nothing else.`;
+
+        const queryResponse = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: queryPrompt,
+        });
+
+        let searchQuery = queryResponse.text.trim().replace(/['"]/g, '');
+        
+        // Fallback to basic keyword extraction if Gemini fails
+        if (!searchQuery || searchQuery.length < 3) {
+            const keywords = visualDescription
+                .toLowerCase()
+                .replace(/[^a-z\s]/g, '')
+                .split(' ')
+                .filter(word => word.length > 2)
+                .slice(0, 3)
+                .join(' ');
+            searchQuery = keywords || 'education learning';
+        }
+        
+        // Add word context if available
+        if (word) {
+            searchQuery = `${word} ${searchQuery}`.substring(0, 50); // Limit length
+        }
+        
+        console.log(`Searching Unsplash for: "${searchQuery}"`);
         
         const response = await fetch(
-            `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&page=1&per_page=10&orientation=landscape`,
+            `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&page=1&per_page=20&orientation=landscape&content_filter=high`,
             {
                 headers: {
                     'Authorization': `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
@@ -161,17 +208,37 @@ export const generateImageForWord = async (visualDescription: string): Promise<s
         const data = await response.json();
         
         if (data.results && data.results.length > 0) {
-            // Get a random image from the results
-            const randomIndex = Math.floor(Math.random() * data.results.length);
-            const selectedImage = data.results[randomIndex];
-            return selectedImage.urls.regular; // Use 'regular' size for good quality
+            // Prefer images with higher likes/downloads for better quality
+            const sortedImages = data.results.sort((a: any, b: any) => b.likes - a.likes);
+            const selectedImage = sortedImages[Math.floor(Math.random() * Math.min(5, sortedImages.length))];
+            return selectedImage.urls.regular;
         } else {
-            throw new Error('No images found for this search term');
+            // Try a more generic search if specific search fails
+            const fallbackQuery = word || 'education';
+            const fallbackResponse = await fetch(
+                `https://api.unsplash.com/search/photos?query=${encodeURIComponent(fallbackQuery)}&page=1&per_page=10&orientation=landscape&content_filter=high`,
+                {
+                    headers: {
+                        'Authorization': `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+                    },
+                }
+            );
+            
+            if (fallbackResponse.ok) {
+                const fallbackData = await fallbackResponse.json();
+                if (fallbackData.results && fallbackData.results.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * fallbackData.results.length);
+                    return fallbackData.results[randomIndex].urls.regular;
+                }
+            }
+            
+            throw new Error('No relevant images found');
         }
     } catch(e) {
         console.error("Failed to fetch image from Unsplash:", e);
-        // Return a placeholder image URL as fallback
-        return `https://via.placeholder.com/400x300/3B82F6/FFFFFF?text=${encodeURIComponent('Image+Not+Available')}`;
+        // Return a more attractive placeholder image
+        const placeholderText = word ? encodeURIComponent(word) : 'Vocabulary';
+        return `https://via.placeholder.com/400x300/667eea/FFFFFF?text=${placeholderText}`;
     }
 };
 

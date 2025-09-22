@@ -351,7 +351,7 @@ const App: React.FC = () => {
 
     try {
         const info = await getWordInfo(cleanedWord);
-        const imageUrl = await generateImageForWord(info.visualDescription);
+        const imageUrl = await generateImageForWord(info.visualDescription, cleanedWord);
         setWordInfo({ ...info, imageUrl });
     } catch (err) {
         console.error(err);

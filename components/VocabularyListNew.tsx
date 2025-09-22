@@ -134,7 +134,7 @@ const VocabularyList: React.FC<VocabularyListProps> = ({
 
     try {
       const info = await getWordInfo(cleanedWord);
-      const imageUrl = await generateImageForWord(info.visualDescription);
+      const imageUrl = await generateImageForWord(info.visualDescription, cleanedWord);
       setSearchResult({ ...info, imageUrl });
     } catch (err) {
       setSearchError('Không tìm thấy thông tin cho từ này. Vui lòng thử lại.');
