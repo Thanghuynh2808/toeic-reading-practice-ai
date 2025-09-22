@@ -109,6 +109,7 @@ const VocabularyList: React.FC<VocabularyListProps> = ({
   const [searchResult, setSearchResult] = useState<WordInfo | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   const wordsDueForReview = useMemo(() => {
     const now = new Date();
@@ -122,6 +123,19 @@ const VocabularyList: React.FC<VocabularyListProps> = ({
     
     return { total, mastered, learning, needReview: wordsDueForReview };
   }, [savedWords, wordsDueForReview]);
+
+  // Handle scroll for back to top button
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    setShowBackToTop(target.scrollTop > 200);
+  };
+
+  const scrollToTop = () => {
+    const mainElement = document.querySelector('.vocabulary-scroll-container');
+    if (mainElement) {
+      mainElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -297,8 +311,11 @@ const VocabularyList: React.FC<VocabularyListProps> = ({
             </div>
           </div>
 
-          {/* Main Content Area - Full Width */}
-          <main className="flex-grow overflow-y-auto p-6">
+          {/* Main Content Area - Full Width with Enhanced Scrolling */}
+          <main 
+            className="vocabulary-scroll-container flex-grow overflow-y-auto p-6 scroll-smooth scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600 scrollbar-track-transparent hover:scrollbar-thumb-slate-400 dark:hover:scrollbar-thumb-slate-500 relative"
+            onScroll={handleScroll}
+          >
             {savedWords.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-6">
@@ -311,24 +328,44 @@ const VocabularyList: React.FC<VocabularyListProps> = ({
               </div>
             ) : (
               <div className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm py-2 z-10 rounded-lg shadow-sm">
                   <h3 className="text-2xl font-bold text-slate-700 dark:text-slate-300 flex items-center">
                     <i className="fas fa-list mr-3 text-blue-600"></i>
                     Saved Words ({savedWords.length})
                   </h3>
+                  {savedWords.length > 8 && (
+                    <div className="text-sm text-slate-500 dark:text-slate-400 flex items-center space-x-2 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">
+                      <i className="fas fa-scroll text-blue-500 animate-pulse"></i>
+                      <span>Scroll to see more</span>
+                    </div>
+                  )}
                 </div>
                 
-                {/* Responsive Grid - More cards per row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+                {/* Responsive Grid - More cards per row with improved spacing */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 pb-4">
                   {savedWords.map((item, index) => (
-                    <div key={item.word} style={{animationDelay: `${index * 0.1}s`}}>
+                    <div key={item.word} style={{animationDelay: `${index * 0.1}s`}} className="animate-fade-in">
                       <VocabularyCard item={item} onRemove={onRemoveWord} />
                     </div>
                   ))}
                 </div>
+                
+                {/* Bottom spacing for better scrolling experience */}
+                <div className="h-8"></div>
               </div>
             )}
           </main>
+          
+          {/* Back to Top Button */}
+          {showBackToTop && (
+            <button
+              onClick={scrollToTop}
+              className="fixed bottom-8 right-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-20"
+              aria-label="Back to top"
+            >
+              <i className="fas fa-arrow-up text-lg"></i>
+            </button>
+          )}
         </div>
       </div>
     </div>
